@@ -34,9 +34,9 @@ class Core_Outlet_Cli extends Core_Outlet
 	 * @return void
 	 */
 	
-	function render($page_data)
+	function render($_response_data)
 	{
-		echo "Rendering\n";
+		include "Cli/Display.php";
 	}
 	
 }

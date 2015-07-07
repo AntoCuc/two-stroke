@@ -16,13 +16,21 @@ require_once dirname(__FILE__) . '/Core/Exceptions/ProcessorNotFoundException.ph
  * The baseline Inlet class.
  */
 
-require dirname(__FILE__).'/Core/Inlet.php';
+require_once dirname(__FILE__).'/Core/Inlet.php';
+
+/**
+ * The CLI inlet class
+ */
+if(CLI)
+{
+	require_once dirname(__FILE__).'/Core/Inlet/Cli.php';
+}
 
 /**
  * The baseline Outlet class.
  */
 
-require dirname(__FILE__).'/Core/Outlet.php';
+require_once dirname(__FILE__).'/Core/Outlet.php';
 
 /**
  *
