@@ -32,3 +32,7 @@ Engines can be easily copied from one web-application to another speeding up dev
 
 **Example:**
 A Login-Form Engine could be transported from App-X to App-Y. The processing of the form could be different between the two apps so they would have different Login-Form processing Engines. However, the form could have the same characteristics.
+
+##Limitations
+
+**There is too much behavior-centric code in some Inlet processors:** Indeed, some functions are more focused on input processing and output notification and some others have very thin processing and focus on output. It is to be expected to have a thiner Inlet when, for example, producing a form and a thicker one when processing form input (Validating, Storing in DB etc.).
