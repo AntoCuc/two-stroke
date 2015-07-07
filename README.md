@@ -28,7 +28,7 @@ Each Engine has a pre-defined specification that will only satisfy one requireme
 >Developer Analysis: A Registration-Form Engine must have an Inlet that defines the "registration data" to gather and an Outlet that renders the form to the end-user.
 
 ### Reusable
-Components can be easily copied from one web-application to another speeding up development.
+Engines can be easily copied from one web-application to another speeding up development.
 
 **Example:**
-A Login-Form Component could be transported from App-X to App-Y. The processing of the form could be different between the two apps so they would have different Login-Form processing Engines. However, the form could have the same characteristics.
+A Login-Form Engine could be transported from App-X to App-Y. The processing of the form could be different between the two apps so they would have different Login-Form processing Engines. However, the form could have the same characteristics.
