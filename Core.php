@@ -21,6 +21,7 @@ require_once dirname(__FILE__).'/Core/Inlet.php';
 /**
  * The CLI inlet class
  */
+ 
 if(CLI)
 {
 	require_once dirname(__FILE__).'/Core/Inlet/Cli.php';
@@ -172,9 +173,9 @@ class Core
 		 * If a render preference has been defined.
 		 */
 		
-		if(array_key_exists('render', $this->request_data))
+		if(array_key_exists('action', $this->request_data))
 		{
-			$processor = 'Core_Outlet_' . ucfirst($this->request_data['render']);
+			$processor = 'Core_Outlet_' . ucfirst($this->request_data['action']);
 		}
 		
 		/**

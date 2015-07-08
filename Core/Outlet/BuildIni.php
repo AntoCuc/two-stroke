@@ -10,9 +10,8 @@
  * @license http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
-class Core_Outlet_Cli extends Core_Outlet
+class Core_Outlet_BuildIni extends Core_Outlet
 {
-
 	/**
 	 *
 	 * Constructor.
@@ -21,7 +20,7 @@ class Core_Outlet_Cli extends Core_Outlet
 	 * @param array, no default
 	 */
 
-	function Core_Outlet_Cli($_request_data)
+	function Core_Outlet_BuildIni($_request_data)
 	{
 		parent::Core_Outlet($_request_data);
 	}
@@ -36,7 +35,6 @@ class Core_Outlet_Cli extends Core_Outlet
 	
 	function render($_response_data)
 	{
-		include "Cli/Display.php";
+		include "BuildIni/Display.php";
 	}
-	
 }

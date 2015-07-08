@@ -137,12 +137,6 @@ try
 		 */
 		 
 		$request_data['args'] = $args;
-		
-		/**
-		 * Render the CLI interface.
-		 */
-		 
-		$request_data['render'] = 'cli';
 
 	}
 	
@@ -180,12 +174,6 @@ try
 		 
 		$request_data['data']['get'] = $_GET;
 		$request_data['data']['post'] = $_POST;
-		
-		/**
-		 * Render Html markup.
-		 */
-		 
-		$request_data['render'] = 'xhtml';
 
 	}
 	
