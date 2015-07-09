@@ -88,108 +88,88 @@ class Index
 	}
 }
 
-/**
- *
- * Attempt to process the request.
- *
- */
+$request_data = array();
 
-try
+/**
+ * Are we running the script from the command line.
+ */
+ 
+if(CLI)
 {
-	$request_data = array();
-	
 	/**
-	 * Are we running the script from the command line.
+	 * The script arguments.
 	 */
 	 
-	if(CLI)
+	$args = getopt("", array('action:', 'data:'));
+	
+	/**
+	 * Has an action been defined.
+	 */
+	 
+	if(isset($args['action']))
 	{
-		/**
-		 * The script arguments.
-		 */
-		 
-		$args = getopt("", array('action:', 'data:'));
-		
-		/**
-		 * Has an action been defined.
-		 */
-		 
-		if(isset($args['action']))
-		{
-			$request_data['action'] = $args['action'];
-			unset($args['action']);
-		}
-		
-		/**
-		 * No action defined.
-		 */
-		 
-		else
-		{
-			if(DEBUG)
-			{
-				echo "Warning: No action defined. Usage: index.php --action=<action>\n";
-			}
-		}
-		
-		/**
-		 * Load the script arguments.
-		 */
-		 
-		$request_data['args'] = $args;
-
+		$request_data['action'] = $args['action'];
+		unset($args['action']);
 	}
 	
 	/**
-	 * We are running in a browser.
+	 * No action defined.
 	 */
 	 
 	else
 	{
-		
-		/**
-		 * Has an action been defined.
-		 */
-		 
-		if(isset($_GET['action']))
+		if(DEBUG)
 		{
-			$request_data['action'] = $_GET['action'];
+			echo "Warning: No action defined. Usage: index.php --action=<action>\n";
 		}
-		
-		/**
-		 * No action defined.
-		 */
-		 
-		else
-		{
-			if(DEBUG)
-			{
-				echo "Warning: No action defined. <br/>Usage: index.php?action=&lt;action&gt;<br/>";
-			}
-		}
-		
-		/**
-		 * Load the page data.
-		 */
-		 
-		$request_data['data']['get'] = $_GET;
-		$request_data['data']['post'] = $_POST;
-
 	}
 	
-	$index = new Index($request_data);
-	$index->process();
-	
+	/**
+	 * Load the script arguments.
+	 */
+	 
+	$request_data['args'] = $args;
+
 }
 
 /**
- * Could not find the Processor.
+ * We are running in a browser.
  */
-
-catch(ProcessorNotFoundException $e)
+ 
+else
 {
-	echo "The processor could not be found.\n";
-	die();
+	
+	/**
+	 * Has an action been defined.
+	 */
+	 
+	if(isset($_GET['action']))
+	{
+		$request_data['action'] = $_GET['action'];
+	}
+	
+	/**
+	 * No action defined.
+	 */
+	 
+	else
+	{
+		if(DEBUG)
+		{
+			echo "Warning: No action defined. <br/>Usage: index.php?action=&lt;action&gt;<br/>";
+		}
+	}
+	
+	/**
+	 * Load the page data.
+	 */
+	 
+	$request_data['data']['get'] = $_GET;
+	$request_data['data']['post'] = $_POST;
+
 }
+
+$index = new Index($request_data);
+$index->process();
 
 ?>

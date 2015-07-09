@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/Core/Exceptions/ProcessorNotFoundException.php';
-
 /**
  *
  * Process server requests and render an arbitrary format response.
@@ -77,7 +75,7 @@ class Core
 		
 		if(DEBUG)
 		{
-			echo "Core: "; 
+			echo "Core: \n"; 
 			print_r($_request_data);
 		}
 		$this->request_data = $_request_data;
@@ -85,7 +83,7 @@ class Core
 
 	/**
 	 *
-	 * Prints the arbitrary format to the screen.
+	 * Process a request and provide a response.
 	 *
 	 * @access public
 	 * @return void
@@ -94,7 +92,7 @@ class Core
 	public function process()
 	{
 		$page_data = $this->_process_request();
-		$this-> _process_response($page_data);
+		$this->_process_response($page_data);
 	}
 
 	/**
@@ -139,24 +137,13 @@ class Core
 	private function _get_inlet_processor()
 	{
 		/**
-		 * If an action has been defined.
+		 * The processor file name.
 		 */
+		 
+		$processor_file_name = $this->_build_processor_file_name('Core_Inlet');
 		
-		if(array_key_exists('action', $this->request_data))
-		{
-			$processor = 'Core_Inlet_' . ucfirst($this->request_data['action']);
-		}
+		return $this->_get_processor($processor_file_name);
 		
-		/**
-		 * Use the default Inlet processor.
-		 */
-		
-		else
-		{
-			$processor = 'Core_Inlet';
-		}
-		
-		return $this->_get_processor($processor);
 	}
 	
 	/**
@@ -170,24 +157,114 @@ class Core
 	private function _get_outlet_processor()
 	{
 		/**
-		 * If a render preference has been defined.
+		 * The processor file name.
+		 */
+		 
+		$processor_file_name = $this->_build_processor_file_name('Core_Outlet');
+		
+		return $this->_get_processor($processor_file_name);
+		
+	}
+	
+	/**
+	 *
+	 * Determine whether an action is defined.
+	 *
+	 * @access private
+	 * @return boolean
+	 */
+	 
+	private function _an_action_is_defined()
+	{
+		return array_key_exists('action', $this->request_data);
+	}
+	
+	/**
+	 * Determine whether the processor exists.
+	 *
+	 * @access private
+	 * @return boolean
+	 */
+	 
+	private function _the_processor_exists($processor_name)
+	{
+		/**
+		 * Create the processor file path.
+		 */
+		 
+		$file_path = $this->_build_processor_file_path($processor_name);
+		
+		/**
+		 * Does the processor class file exist.
 		 */
 		
-		if(array_key_exists('action', $this->request_data))
+		return file_exists($file_path);
+		
+	}
+	
+	/**
+	 * Build the processor file path.
+	 *
+	 * @access private
+	 * @return string the processor file path
+	 */
+	 
+	private function _build_processor_file_path($processor_name)
+	{
+		/**
+		 * Create the processor file relative path.
+		 */
+		 
+		$file_relative_path = str_replace("_", "/", $processor_name) . ".php";
+		
+		/**
+		 * Create the processor absolute path.
+		 */
+		 
+		return dirname(__FILE__) . "/" . $file_relative_path;
+
+	}
+	
+	/**
+	 * Build the processor file name.
+	 *
+	 * @access private
+	 * @return string the processor file name
+	 */
+	 
+	private function _build_processor_file_name($default_name)
+	{
+		/**
+		 * Check whether the processor name is defined.
+		 */
+		if(! isset($this->request_data['action']))
 		{
-			$processor = 'Core_Outlet_' . ucfirst($this->request_data['action']);
+			return $default_name;
+		}
+	
+		/**
+		 * The processor file name based on action.
+		 */
+		 
+		$processor_file_name = $default_name . '_' . ucfirst($this->request_data['action']);
+		
+		/**
+		 * Check whether the processor file exists.
+		 */
+		 
+		if($this->_the_processor_exists($processor_file_name))
+		{
+			return $processor_file_name;
 		}
 		
 		/**
-		 * Use the default Outlet processor.
+		 * Use the default processor.
 		 */
 		 
 		else
 		{
-			$processor = 'Core_Outlet';
+			return $default_name;
 		}
-		
-		return $this->_get_processor($processor);
 	}
 	
 	/**
@@ -200,50 +277,23 @@ class Core
 	
 	private function _get_processor($processor)
 	{
-		/**
-		 * Create the processor file relative path.
-		 */
-		 
-		$file_relative_path = str_replace("_", "/", $processor) . ".php";
-		
-		/**
-		 * Create the processor absolute path.
-		 */
-		 
-		$file_absolute_path = dirname(__FILE__) . "/" . $file_relative_path;
-		
-		/**
-		 * Does the processor class file exist.
-		 */
-		
 		if(DEBUG)
 		{
-			echo "Loading: " . $file_absolute_path . " ..";
-		}
-		if(file_exists($file_absolute_path))
-		{
-			require_once($file_absolute_path);
-			
-			if(DEBUG)
-			{
-				echo ". Done.\n";
-			}
-			
-			return new $processor($this->request_data);
+			echo 'Initialising Processor: ' . $processor . "\n";
 		}
 		
 		/**
-		 * The Processor does not exist.
+		 * Include the processor class file.
 		 */
+		 
+		$file_absolute_path = $this->_build_processor_file_path($processor);
+		require_once $file_absolute_path;
 		
-		else
-		{
-			if(DEBUG)
-			{
-				echo ". Fail.\n";
-			}
-			
-			throw new ProcessorNotFoundException();
-		}
+		/**
+		 * Initialise the processor.
+		 */
+		 
+		return new $processor($this->request_data);
 	}
+	
 }
