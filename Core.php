@@ -68,8 +68,7 @@ class Core
 	{
 		/**
 		 *
-		 * If the action is supported, load the request data
-		 * else print an error.
+		 * Initialise the request data.
 		 *
 		 */
 		
