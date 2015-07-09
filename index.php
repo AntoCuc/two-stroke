@@ -11,22 +11,21 @@
  */
 
 /**
- * The baseline Core class.
- */
-
-require dirname(__FILE__).'/Core.php';
-
-/**
  * The script run environment.
  */
- 
-define('CLI', PHP_SAPI === 'cli');
+define('CLI', php_sapi_name() === 'cli');
 
 /**
  * The script run mode.
  */
  
 define('DEBUG', true);
+
+/**
+ * The baseline Core class.
+ */
+
+require dirname(__FILE__).'/Core.php';
 
 /**
  *
