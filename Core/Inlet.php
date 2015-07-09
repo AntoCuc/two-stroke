@@ -32,7 +32,6 @@ class Core_Inlet
 
 	function Core_Inlet($_request_data)
 	{
-		$_request_data = $this->sanity_check_input($_request_data);
 		$this->request_data = $_request_data;
 		
 		if(DEBUG)
@@ -52,31 +51,6 @@ class Core_Inlet
 
 	function parse()
 	{
-	}
-
-	/**
-	 *
-	 * Returns the sanitised input array.
-	 *
-	 * @access public
-	 * @return array The sanitised array
-	 */
-
-	function sanity_check_input($input_data = array())
-	{
-		$output_data = array();
-		foreach($input_data as $key => $value)
-		{
-			if($key != '')
-			{
-				if($value == null)
-				{
-					$value = '';
-				}
-				$output_data[$key] = $value;
-			}
-		}
-		return $output_data;
 	}
 	
 }
