@@ -35,4 +35,4 @@ A Login-Form Engine could be transported from App-X to App-Y. The processing of 
 
 ##Limitations
 
-**There is too much behavior-centric code in some Inlet processors:** Indeed, some functions are more focused on input processing and output notification and some others have very thin processing and focus on output. It is to be expected to have a thiner Inlet when, for example, producing a form and a thicker one when processing form input (Validating, Storing in DB etc.).
+**There is too much behavior-centric code in some Inlet processors:** Indeed, some functions are more focused on input processing and output notification and some others have very thin processing and focus on output. It is to be expected to have a thinner Inlet when, for example, producing a form and a thicker one when processing form input (Validating, Storing in DB etc.).
