@@ -5,7 +5,7 @@ The name comes from its design being loosely related to a two stroke engine.
 ## Project aim
 The aim of *Two Stroke* is to create a way of satisfying user requests with modular, single-purpose and re-usable Engines.
 
-###What is an Engine
+### What is an Engine
 An Engine is composed of two parts:
 
   * An Inlet that processes a request
@@ -33,6 +33,6 @@ Engines can be easily copied from one web-application to another speeding up dev
 **Example:**
 A Login-Form Engine could be transported from App-X to App-Y. The processing of the form could be different between the two apps so they would have different Login-Form processing Engines. However, the form could have the same characteristics.
 
-##Limitations
+## Limitations
 
 **There is too much behavior-centric code in some Inlet processors:** Indeed, some functions are more focused on input processing and output notification and some others have very thin processing and focus on output. It is to be expected to have a thinner Inlet when, for example, producing a form and a thicker one when processing form input (Validating, Storing in DB etc.).
